@@ -29,6 +29,7 @@ class TemplateSetup
     gsub_files
     rename_dirs
     rename_files
+    adopt_go_version if @options.go_version
     finish
   end
 
@@ -61,6 +62,12 @@ class TemplateSetup
 
       end
 
+      opts.on("-g GO-VERSION", "--go-version GO-VERSSION",
+             "go-version to use in chroot - one out of: 1.3.1 || 1.4.3 || 1.5.1. 
+                                     default is go 1.4.3") do |n|
+        @options.go_version = n
+      end
+
       opts.on_tail("-h", "--help", "Show this message") do
         @options.verbose = true
         @options.name = "[APPNAME]"
@@ -75,10 +82,15 @@ class TemplateSetup
   end
 
   def check_options
-    if @options.name.nil? || @options.email.nil? || @options.author.nil? || @options.namespace.nil?
+    if @options.name.nil? || 
+      @options.email.nil? || 
+      @options.author.nil? || 
+      @options.namespace.nil? ||
+      !@options.go_version.nil? && !%w{1.3.1 1.4.3 1.5.1}.include?(@options.go_version)
       puts @options.op
       exit 1
     end
+
   end
 
   def print_steps
@@ -98,6 +110,7 @@ class TemplateSetup
     puts " -> rename file ubuntu-go-qml-template.desktop to #{@options.name}.desktop"
     puts " -> rename file ubuntu-go-qml-template.goproject to #{@options.name}.goproject"
     puts " -> rename file ubuntu-go-qml-template.png to #{@options.name}.png"
+    puts " -> adopt chroot-scripts/install-go.sh for #{@options.go_version}" if @options.go_version
   end
 
   def gsub_files
@@ -139,6 +152,13 @@ class TemplateSetup
     fnames.each do |fname|
       File.rename fname, "#{@options.name}.#{ fname.split('.')[1]}"
     end
+  end
+
+  def adopt_go_version
+    fname = 'chroot-scripts/install-go.sh'
+    txt = File.read(fname)
+    txt = text.gsub(/1.4.3/, "#{@options.go_version}")
+    File.open(fname, "w") { |f| f.puts txt }
   end
 
   def finish
