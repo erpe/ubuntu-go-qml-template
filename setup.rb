@@ -63,7 +63,7 @@ class TemplateSetup
       end
 
       opts.on("-g GO-VERSION", "--go-version GO-VERSSION",
-             "go-version to use in chroot - one out of: 1.3.1 || 1.4.3 || 1.5.1. 
+             "go-version to use in chroot - one out of: 1.3.3 || 1.4.3  
                                      default is go 1.4.3") do |n|
         @options.go_version = n
       end
@@ -86,7 +86,7 @@ class TemplateSetup
       @options.email.nil? || 
       @options.author.nil? || 
       @options.namespace.nil? ||
-      !@options.go_version.nil? && !%w{1.3.1 1.4.3 1.5.1}.include?(@options.go_version)
+      !@options.go_version.nil? && !%w{1.3.3 1.4.3}.include?(@options.go_version)
       puts @options.op
       exit 1
     end
