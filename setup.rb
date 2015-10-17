@@ -157,7 +157,7 @@ class TemplateSetup
   def adopt_go_version
     fname = 'chroot-scripts/install-go.sh'
     txt = File.read(fname)
-    txt = text.gsub(/1.4.3/, "#{@options.go_version}")
+    txt = txt.gsub(/1.4.3/, "#{@options.go_version}")
     File.open(fname, "w") { |f| f.puts txt }
   end
 
