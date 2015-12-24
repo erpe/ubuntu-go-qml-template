@@ -3,7 +3,7 @@
 # This way of installing go requires the user to run export PATH=$PATH:$INSTALL_DIR to use the go installation.
 # This is following the official installation instructions: https://golang.org/doc/install#tarball
 
-echo "This will install go 1.4.3 in the current directory for use with the armhf chroot."
+echo "This will install go 1.5.2 in the current directory for use with the armhf chroot."
 echo
 
 INSTALL_DIR=$(pwd)
