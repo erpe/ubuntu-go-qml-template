@@ -31,8 +31,6 @@ echo "======= Installing new golang ======="
 echo "====================================="
 echo
 
-sudo export GOROOT_BOOTSTRAP=/usr/lib/go
-
 if [ $ARCH = "x86_64" ]; then
 	sudo click chroot -a armhf -f ubuntu-sdk-15.04 -s vivid maint tar -C $INSTALL_DIR -xzf $INSTALL_DIR/go1.5.2.linux-amd64.tar.gz
 	rm $INSTALL_DIR/go1.5.2.linux-amd64.tar.gz
@@ -43,7 +41,7 @@ fi
 
 cd $INSTALL_DIR/go/src
 
-sudo CGO_ENABLED=1 GOARCH=arm GOARM=7 GOOS=linux ./make.bash --no-clean
+sudo GOROOT_BOOTSTRAP=/usr/lib/go CGO_ENABLED=1 GOARCH=arm GOARM=7 GOOS=linux ./make.bash --no-clean
 
 cd -
 
