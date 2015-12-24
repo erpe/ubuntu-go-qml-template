@@ -62,9 +62,9 @@ class TemplateSetup
 
       end
 
-      opts.on("-g GO-VERSION", "--go-version GO-VERSSION",
-             "go-version to use in chroot - one out of: 1.3.3 || 1.4.3  
-                                     default is go 1.4.3") do |n|
+      opts.on("-g GO-VERSION", "--go-version GO-VERSION",
+             "go-version to use in chroot - for example: 1.3.3 || 1.4.3 || 1.5.2
+                                     default is go 1.5.2") do |n|
         @options.go_version = n
       end
 
@@ -85,8 +85,7 @@ class TemplateSetup
     if @options.name.nil? || 
       @options.email.nil? || 
       @options.author.nil? || 
-      @options.namespace.nil? ||
-      !@options.go_version.nil? && !%w{1.3.3 1.4.3}.include?(@options.go_version)
+      @options.namespace.nil? 
       puts @options.op
       exit 1
     end
@@ -157,7 +156,7 @@ class TemplateSetup
   def adopt_go_version
     fname = 'chroot-scripts/install-go.sh'
     txt = File.read(fname)
-    txt = txt.gsub(/1.4.3/, "#{@options.go_version}")
+    txt = txt.gsub(/1.5.2/, "#{@options.go_version}")
     File.open(fname, "w") { |f| f.puts txt }
   end
 

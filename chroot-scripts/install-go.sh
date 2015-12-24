@@ -14,15 +14,15 @@ echo "====================================="
 echo
 
 ARCH=$(uname -m)
-echo "Downloading golang version 1.4.3 for architecture \"$ARCH\"..."
+echo "Downloading golang version 1.5.2 for architecture \"$ARCH\"..."
 echo
 
 cd $INSTALL_DIR
 
 if [ $ARCH = "x86_64" ]; then
-	wget -P $INSTALL_DIR https://storage.googleapis.com/golang/go1.4.3.linux-amd64.tar.gz
+	wget -P $INSTALL_DIR https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz
 else
-	wget -P $INSTALL_DIR https://storage.googleapis.com/golang/go1.4.3.linux-386.tar.gz
+	wget -P $INSTALL_DIR https://storage.googleapis.com/golang/go1.5.2.linux-386.tar.gz
 fi
 
 echo
@@ -31,12 +31,14 @@ echo "======= Installing new golang ======="
 echo "====================================="
 echo
 
+sudo export GOROOT_BOOTSTRAP=/usr/lib/go
+
 if [ $ARCH = "x86_64" ]; then
-	sudo click chroot -a armhf -f ubuntu-sdk-15.04 -s vivid maint tar -C $INSTALL_DIR -xzf $INSTALL_DIR/go1.4.3.linux-amd64.tar.gz
-	rm $INSTALL_DIR/go1.4.3.linux-amd64.tar.gz
+	sudo click chroot -a armhf -f ubuntu-sdk-15.04 -s vivid maint tar -C $INSTALL_DIR -xzf $INSTALL_DIR/go1.5.2.linux-amd64.tar.gz
+	rm $INSTALL_DIR/go1.5.2.linux-amd64.tar.gz
 else
-	sudo click chroot -a armhf -f ubuntu-sdk-15.04 -s vivid maint tar -C $INSTALL_DIR -xzf $INSTALL_DIR/go1.4.3.linux-386.tar.gz
-	rm $INSTALL_DIR/go1.4.3.linux-386.tar.gz
+	sudo click chroot -a armhf -f ubuntu-sdk-15.04 -s vivid maint tar -C $INSTALL_DIR -xzf $INSTALL_DIR/go1.5.2.linux-386.tar.gz
+	rm $INSTALL_DIR/go1.5.2.linux-386.tar.gz
 fi
 
 cd $INSTALL_DIR/go/src
